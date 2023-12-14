@@ -24,5 +24,10 @@ void _stack_(stack_t **head, unsigned int c_line);
 void _add_(stack_t **head, unsigned int c_line);
 void _nop_(stack_t **head, unsigned int c_line);
 void _sub_(stack_t **head, unsigned int c_line);
+void _rotl_(stack_t **doubly, unsigned int c_line);
+void _rotr_(stack_t **doubly, unsigned int c_line);
+int _strcmp_(char *str1, char *str2);
+int _sch_(char *str, char c);
+char *_strtoky_(char *s, char *c);
 
 #endif /*MONTY_H*/
