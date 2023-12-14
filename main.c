@@ -14,9 +14,9 @@ void free_vglo(void)
 
 /**
  * start_vglo - initializes the global variables
- * @arg: file descriptor
+ * @fd: file descriptor
  */
-void start_vglo(FILE *arg)
+void start_vglo(FILE *fd)
 {
 	vglo.lifo = 1;
 	vglo.cont = 1;
@@ -27,14 +27,12 @@ void start_vglo(FILE *arg)
 }
 
 /**
- * check_input - checks if the file exists and if the file can
- * be opened
- *
+ * check_file - checks if the file exists and if the file can be opened
  * @argc: argument count
  * @argv: argument vector
  * Return: file struct
  */
-FILE *check_input(int argc, char *argv[])
+FILE *check_file(int argc, char *argv[])
 {
 	FILE *fd;
 
@@ -57,7 +55,6 @@ FILE *check_input(int argc, char *argv[])
 
 /**
  * main - Entry point
- *
  * @argc: argument count
  * @argv: argument vector
  * Return: 0 on success
@@ -67,18 +64,18 @@ int main(int argc, char *argv[])
 	void (*f)(stack_t **stack, unsigned int line_number);
 	FILE *fd;
 	size_t size = 256;
-	ssize_t nlines = 0;
+	ssize_t n_lines = 0;
 	char *lines[2] = {NULL, NULL};
 
-	fd = check_input(argc, argv);
+	fd = check_file(argc, argv);
 	start_vglo(fd);
-	nlines = getline(&vglo.buffer, &size, fd);
-	while (nlines != -1)
+	n_lines = getline(&vglo.buffer, &size, fd);
+	while (n_lines != -1)
 	{
-		lines[0] = _strtoky(vglo.buffer, " \t\n");
+		lines[0] = _strtoky_(vglo.buffer, " \t\n");
 		if (lines[0] && lines[0][0] != '#')
 		{
-			f = get_opcodes(lines[0]);
+			f = get_opcode(lines[0]);
 			if (!f)
 			{
 				dprintf(2, "L%u: ", vglo.cont);
@@ -86,10 +83,10 @@ int main(int argc, char *argv[])
 				free_vglo();
 				exit(EXIT_FAILURE);
 			}
-			vglo.arg = _strtoky(NULL, " \t\n");
+			vglo.arg = _strtoky_(NULL, " \t\n");
 			f(&vglo.head, vglo.cont);
 		}
-		nlines = getline(&vglo.buffer, &size, fd);
+		n_lines = getline(&vglo.buffer, &size, fd);
 		vglo.cont++;
 	}
 

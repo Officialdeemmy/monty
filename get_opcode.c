@@ -31,7 +31,7 @@ void (*get_opcode(char *op))(stack_t **stack, unsigned int line_number)
 
 	for (n = 0; instruction[n].opcode; n++)
 	{
-		if (_strcmp(instruction[n].opcode, op) == 0)
+		if (_strcmp_(instruction[n].opcode, op) == 0)
 			break;
 	}
 

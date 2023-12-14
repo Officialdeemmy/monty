@@ -55,19 +55,19 @@ char *_strtoky_(char *s, char *c)
 	int i = 0, j = 0;
 
 	if (!s)
-		s = ultimo;
+		s = ult;
 	while (s[i] != '\0')
 	{
-		if (_sch(c, s[i]) == 0 && s[i + 1] == '\0')
+		if (_sch_(c, s[i]) == 0 && s[i + 1] == '\0')
 		{
 			ult = s + i + 1;
 			*ult = '\0';
 			s = s + j;
 			return (s);
 		}
-		else if (_sch(c, s[i]) == 0 && _sch(c, s[i + 1]) == 0)
+		else if (_sch_(c, s[i]) == 0 && _sch(c, s[i + 1]) == 0)
 			i++;
-		else if (_sch(c, s[i]) == 0 && _sch(c, s[i + 1]) == 1)
+		else if (_sch_(c, s[i]) == 0 && _sch(c, s[i + 1]) == 1)
 		{
 			ult = s + i + 1;
 			*ult = '\0';
@@ -75,7 +75,7 @@ char *_strtoky_(char *s, char *c)
 			s = s + j;
 			return (s);
 		}
-		else if (_sch(c, s[i]) == 1)
+		else if (_sch_(c, s[i]) == 1)
 		{
 			j++;
 			i++;
