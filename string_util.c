@@ -65,9 +65,9 @@ char *_strtoky_(char *s, char *c)
 			s = s + j;
 			return (s);
 		}
-		else if (_sch_(c, s[i]) == 0 && _sch(c, s[i + 1]) == 0)
+		else if (_sch_(c, s[i]) == 0 && _sch_(c, s[i + 1]) == 0)
 			i++;
-		else if (_sch_(c, s[i]) == 0 && _sch(c, s[i + 1]) == 1)
+		else if (_sch_(c, s[i]) == 0 && _sch_(c, s[i + 1]) == 1)
 		{
 			ult = s + i + 1;
 			*ult = '\0';

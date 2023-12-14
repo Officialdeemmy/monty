@@ -13,7 +13,7 @@ stack_t *add_dnode_end(stack_t **head, const int node)
 	if (head == NULL)
 		return (NULL);
 	tmp = malloc(sizeof(stack_t));
-	if (!temp)
+	if (!tmp)
 	{
 		dprintf(2, "Error: malloc failed\n");
 		free_vglo();

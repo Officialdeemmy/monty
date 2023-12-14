@@ -1,4 +1,5 @@
 #include "monty.h"
+#include <stdio.h>
 
 global_t vglo;
 
@@ -64,13 +65,13 @@ int main(int argc, char *argv[])
 	void (*f)(stack_t **stack, unsigned int line_number);
 	FILE *fd;
 	size_t size = 256;
-	ssize_t n_lines = 0;
+	ssize_t nlines = 0;
 	char *lines[2] = {NULL, NULL};
 
 	fd = check_file(argc, argv);
 	start_vglo(fd);
-	n_lines = getline(&vglo.buffer, &size, fd);
-	while (n_lines != -1)
+	nlines = getline(&vglo.buffer, &size, fd);
+	while (nlines != -1)
 	{
 		lines[0] = _strtoky_(vglo.buffer, " \t\n");
 		if (lines[0] && lines[0][0] != '#')
@@ -86,7 +87,7 @@ int main(int argc, char *argv[])
 			vglo.arg = _strtoky_(NULL, " \t\n");
 			f(&vglo.head, vglo.cont);
 		}
-		n_lines = getline(&vglo.buffer, &size, fd);
+		nlines = getline(&vglo.buffer, &size, fd);
 		vglo.cont++;
 	}
 
