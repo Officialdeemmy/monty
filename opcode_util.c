@@ -1,126 +1,127 @@
 #include "monty.h"
 
 /**
- * _push_ - push an element to the stack
- * @head: the head of the linked list
- * @c_line: the line number
- */
-void _push_(stack_t **head, unsigned int c_line)
+ * _push - add node to the stack
+ * @head: stack head
+ * @counter: line_number
+*/
+void _push(stack_t **head, unsigned int counter)
 {
-	int n, i;
+	int n, j = 0, flag = 0;
 
-	if (!vglo.arg)
+	if (bus.arg)
 	{
-		dprintf(2, "L%u: ", c_line);
-		dprintf(2, "usage: push integer\n");
-		free_vglo();
-		exit(EXIT_FAILURE);
-	}
-
-	for (i = 0; vglo.arg[i] != '\0'; i++)
-	{
-		if (!isdigit(vglo.arg[i]) && vglo.arg[i] != '-')
+		if (bus.arg[0] == '-')
+			j++;
+		for (; bus.arg[j] != '\0'; j++)
 		{
-			dprintf(2, "L%u: ", c_line);
-			dprintf(2, "usage: push integer\n");
-			free_vglo();
-			exit(EXIT_FAILURE);
-		}
-	}
-
-	n = atoi(vglo.arg);
-
-	if (vglo.lifo == 1)
-		add_dnode(head, n);
+			if (bus.arg[j] > 57 || bus.arg[j] < 48)
+				flag = 1; }
+		if (flag == 1)
+		{ fprintf(stderr, "L%d: usage: push integer\n", counter);
+			fclose(bus.file);
+			free(bus.content);
+			free_stack(*head);
+			exit(EXIT_FAILURE); }}
 	else
-		add_dnode_end(head, n);
+	{ fprintf(stderr, "L%d: usage: push integer\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
+		exit(EXIT_FAILURE); }
+	n = atoi(bus.arg);
+	if (bus.lifi == 0)
+		addnode(head, n);
+	else
+		addqueue(head, n);
 }
 
 /**
- * _pall_ - prints all the values on the stack
- * @head: the head of the linked list
- * @c_line: the line numbers
- */
-void _pall_(stack_t **head, unsigned int c_line)
+ * _pall - prints the stack
+ * @head: stack head
+ * @counter: no used
+*/
+void _pall(stack_t **head, unsigned int counter)
 {
-	stack_t *aux;
-	(void)c_line;
+	stack_t *h;
+	(void)counter;
 
-	aux = *head;
-
-	while (aux)
+	h = *head;
+	if (h == NULL)
+		return;
+	while (h)
 	{
-		printf("%d\n", aux->n);
-		aux = aux->next;
+		printf("%d\n", h->n);
+		h = h->next;
 	}
 }
 
 /**
- * _pint_ - prints the value at the top of the stack
- * @head: the head of the linked list
- * @c_line: the line number
- */
-void _pint_(stack_t **head, unsigned int c_line)
+ * _pint - prints the top
+ * @head: stack head
+ * @counter: line_number
+*/
+void _pint(stack_t **head, unsigned int counter)
 {
-	(void)c_line;
-
 	if (*head == NULL)
 	{
-		dprintf(2, "L%u: ", c_line);
-		dprintf(2, "can't pint, stack empty\n");
-		free_vglo();
+		fprintf(stderr, "L%u: can't pint, stack empty\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
-
 	printf("%d\n", (*head)->n);
 }
 
 /**
- * _pop_ - removes the top element of the stack
- * @head: the head of the linked list
- * @c_line: the line number
- */
-void _pop_(stack_t **head, unsigned int c_line)
+ * _pop - prints the top
+ * @head: stack head
+ * @counter: line_number
+*/
+void _pop(stack_t **head, unsigned int counter)
 {
-	stack_t *aux;
+	stack_t *h;
 
-	if (head == NULL || *head == NULL)
+	if (*head == NULL)
 	{
-		dprintf(2, "L%u: can't pop an empty stack\n", c_line);
-		free_vglo();
+		fprintf(stderr, "L%d: can't pop an empty stack\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
-	aux = *head;
-	*head = (*head)->next;
-	free(aux);
+	h = *head;
+	*head = h->next;
+	free(h);
 }
 
 /**
- * _swap_ - swaps the top two elements of the stack
- * @head: the head of the linked list
- * @c_line: the line number
- */
-void _swap_(stack_t **head, unsigned int c_line)
+ * _swap - adds the top two elements of the stack.
+ * @head: stack head
+ * @counter: line_number
+*/
+void _swap(stack_t **head, unsigned int counter)
 {
-	int n = 0;
-	stack_t *aux = NULL;
+	stack_t *h;
+	int len = 0, aux;
 
-	aux = *head;
-
-	for (; aux != NULL; aux = aux->next, n++)
-		;
-
-	if (n < 2)
+	h = *head;
+	while (h)
 	{
-		dprintf(2, "L%u: can't swap, stack too short\n", c_line);
-		free_vglo();
+		h = h->next;
+		len++;
+	}
+	if (len < 2)
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
-
-	aux = *head;
-	*head = (*head)->next;
-	aux->next = (*head)->next;
-	aux->prev = *head;
-	(*head)->next = aux;
-	(*head)->prev = NULL;
+	h = *head;
+	aux = h->n;
+	h->n = h->next->n;
+	h->next->n = aux;
 }
