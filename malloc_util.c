@@ -32,7 +32,7 @@ void *_calloc(unsigned int n, unsigned int size)
  * @old_size: old number of bytes
  * @new_size: new number of Bytes
  */
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+void *_realloc(char *ptr, unsigned int old_size, unsigned int new_size)
 {
 	char *a = NULL;
 	unsigned int i;
