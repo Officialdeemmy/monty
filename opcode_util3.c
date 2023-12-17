@@ -1,138 +1,166 @@
 #include "monty.h"
 
 /**
- * _div_ - divides the second element by the top element of the stack
- * @head: head of the linked list
- * @c_line: line number
- */
-void _div_(stack_t **head, unsigned int c_line)
+ * _div - divides the top two elements of the stack.
+ * @head: stack head
+ * @counter: line_number
+*/
+void _div(stack_t **head, unsigned int counter)
 {
-	int n = 0;
-	stack_t *aux = NULL;
+	stack_t *h;
+	int len = 0, aux;
 
-	aux = *head;
-
-	for (; aux != NULL; aux = aux->next, n++)
-		;
-
-	if (n < 2)
+	h = *head;
+	while (h)
 	{
-		dprintf(2, "L%u: can't div, stack too short\n", c_line);
-		free_vglo();
+		h = h->next;
+		len++;
+	}
+	if (len < 2)
+	{
+		fprintf(stderr, "L%d: can't div, stack too short\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
-
-	if ((*head)->n == 0)
+	h = *head;
+	if (h->n == 0)
 	{
-		dprintf(2, "L%u: division by zero\n", c_line);
-		free_vglo();
+		fprintf(stderr, "L%d: division by zero\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
-
-	aux = (*head)->next;
-	aux->n /= (*head)->n;
-	_pop_(head, c_line);
+	aux = h->next->n / h->n;
+	h->next->n = aux;
+	*head = h->next;
+	free(h);
 }
 
 /**
- * _mul_ - multiplies the top element to the second top element of the stack
- * @head: head of the linked list
- * @c_line: line number
- */
-void _mul_(stack_t **head, unsigned int c_line)
+ * _mul - multiplies the top two elements of the stack.
+ * @head: stack head
+ * @counter: line_number
+*/
+void _mul(stack_t **head, unsigned int counter)
 {
-	int n = 0;
-	stack_t *aux = NULL;
+	stack_t *h;
+	int len = 0, aux;
 
-	aux = *head;
-
-	for (; aux != NULL; aux = aux->next, n++)
-		;
-
-	if (n < 2)
+	h = *head;
+	while (h)
 	{
-		dprintf(2, "L%u: can't mul, stack too short\n", c_line);
-		free_vglo();
+		h = h->next;
+		len++;
+	}
+	if (len < 2)
+	{
+		fprintf(stderr, "L%d: can't mul, stack too short\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
-
-	aux = (*head)->next;
-	aux->n *= (*head)->n;
-	_pop_(head, c_line);
+	h = *head;
+	aux = h->next->n * h->n;
+	h->next->n = aux;
+	*head = h->next;
+	free(h);
 }
 
 /**
- * _mod_ - computes the rest of the division of second element by top element of the stack
- * @head: the head of the linked list
- * @c_line: the line number
- */
-void _mod_(stack_t **head, unsigned int c_line)
+ * _mod - computes the rest of the division of the second
+ * top element of the stack by the top element of the stack
+ * @head: stack head
+ * @counter: line_number
+*/
+void _mod(stack_t **head, unsigned int counter)
 {
-	int n = 0;
-	stack_t *aux = NULL;
+	stack_t *h;
+	int len = 0, aux;
 
-	aux = *head;
-
-	for (; aux != NULL; aux = aux->next, n++)
-		;
-
-	if (n < 2)
+	h = *head;
+	while (h)
 	{
-		dprintf(2, "L%u: can't mod, stack too short\n", c_line);
-		free_vglo();
+		h = h->next;
+		len++;
+	}
+	if (len < 2)
+	{
+		fprintf(stderr, "L%d: can't mod, stack too short\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
-
-	if ((*head)->n == 0)
+	h = *head;
+	if (h->n == 0)
 	{
-		dprintf(2, "L%u: division by zero\n", c_line);
-		free_vglo();
+		fprintf(stderr, "L%d: division by zero\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
-
-	aux = (*head)->next;
-	aux->n %= (*head)->n;
-	_pop_(head, c_line);
-}
-/**
- * _pchar_ - print the char value of the first element
- * @head: head of the linked list
- * @c_line: line number
- */
-void _pchar_(stack_t **head, unsigned int c_line)
-{
-	if (head == NULL || *head == NULL)
-	{
-		dprintf(2, "L%u: can't pchar, stack empty\n", c_line);
-		free_vglo();
-		exit(EXIT_FAILURE);
-	}
-	if ((*head)->n < 0 || (*head)->n >= 128)
-	{
-		dprintf(2, "L%u: can't pchar, value out of range\n", c_line);
-		free_vglo();
-		exit(EXIT_FAILURE);
-	}
-	printf("%c\n", (*head)->n);
+	aux = h->next->n % h->n;
+	h->next->n = aux;
+	*head = h->next;
+	free(h);
 }
 
 /**
- * _pstr_ - prints the string of the stack
- * @head: head of the linked list
- * @c_line: line number
- */
-void _pstr_(stack_t **head, unsigned int c_line)
+ * _pchar - prints the char at the top of the stack,
+ * followed by a new line
+ * @head: stack head
+ * @counter: line_number
+ * Return: no return
+*/
+void _pchar(stack_t **head, unsigned int counter)
 {
-	stack_t *aux;
-	(void)c_line;
+	stack_t *h;
 
-	aux = *head;
-
-	while (aux && aux->n > 0 && aux->n < 128)
+	h = *head;
+	if (!h)
 	{
-		printf("%c", aux->n);
-		aux = aux->next;
+		fprintf(stderr, "L%d: can't pchar, stack empty\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
+		exit(EXIT_FAILURE);
 	}
+	if (h->n > 127 || h->n < 0)
+	{
+		fprintf(stderr, "L%d: can't pchar, value out of range\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
+		exit(EXIT_FAILURE);
+	}
+	printf("%c\n", h->n);
+}
 
+/**
+ * _pstr - prints the string starting at the top of the stack,
+ * followed by a new
+ * @head: stack head
+ * @counter: line_number
+*/
+void _pstr(stack_t **head, unsigned int counter)
+{
+	stack_t *h;
+	(void)counter;
+
+	h = *head;
+	while (h)
+	{
+		if (h->n > 127 || h->n <= 0)
+		{
+			break;
+		}
+		printf("%c", h->n);
+		h = h->next;
+	}
 	printf("\n");
 }
