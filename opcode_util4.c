@@ -76,3 +76,15 @@ void _sub(stack_t **head, unsigned int counter)
 	*head = aux->next;
 	free(aux);
 }
+
+/**
+ * _stack - prints the top
+ * @head: stack head
+ * @counter: line_number
+*/
+void _stack(stack_t **head, unsigned int counter)
+{
+	(void)head;
+	(void)counter;
+	bus.lifi = 0;
+}
