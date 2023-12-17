@@ -1,11 +1,11 @@
 #include "monty.h"
 
 /**
- * _calloc_ - concatenate two strings
+ * _calloc - concatenate two strings
  * @n: number of elements
  * @size: type of elements
  */
-void *_calloc_(unsigned int n, unsigned int size)
+void *_calloc(unsigned int n, unsigned int size)
 {
 	void *a = NULL;
 	unsigned int i;
@@ -27,12 +27,12 @@ void *_calloc_(unsigned int n, unsigned int size)
 }
 
 /**
- * _realloc_ - change the size and copy the content
+ * _realloc - change the size and copy the content
  * @ptr: malloc pointer to reallocate
  * @old_byte: old number of bytes
  * @new_byte: new number of Bytes
  */
-void *_realloc_(void *ptr, unsigned int old_byte, unsigned int new_byte)
+void *_realloc(void *ptr, unsigned int old_byte, unsigned int new_byte)
 {
 	char *a = NULL;
 	unsigned int i;
