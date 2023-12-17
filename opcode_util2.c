@@ -8,7 +8,7 @@ void _queue(stack_t **head, unsigned int counter)
 {
 	(void)head;
 	(void)counter;
-	bus.lifi = 1;
+	cont.lifi = 1;
 }
 
 /**
@@ -46,18 +46,6 @@ void addqueue(stack_t **head, int n)
 }
 
 /**
- * _stack - prints the top
- * @head: stack head
- * @counter: line_number
-*/
-void f_stack(stack_t **head, unsigned int counter)
-{
-	(void)head;
-	(void)counter;
-	bus.lifi = 0;
-}
-
-/**
  * _add - adds the top two elements of the stack.
  * @head: stack head
  * @counter: line_number
@@ -76,8 +64,8 @@ void _add(stack_t **head, unsigned int counter)
 	if (len < 2)
 	{
 		fprintf(stderr, "L%d: can't add, stack too short\n", counter);
-		fclose(bus.file);
-		free(bus.content);
+		fclose(cont.file);
+		free(cont.content);
 		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}

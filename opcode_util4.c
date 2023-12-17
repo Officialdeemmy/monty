@@ -65,8 +65,8 @@ void _sub(stack_t **head, unsigned int counter)
 	if (nodes < 2)
 	{
 		fprintf(stderr, "L%d: can't sub, stack too short\n", counter);
-		fclose(bus.file);
-		free(bus.content);
+		fclose(cont.file);
+		free(cont.content);
 		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
@@ -86,5 +86,5 @@ void _stack(stack_t **head, unsigned int counter)
 {
 	(void)head;
 	(void)counter;
-	bus.lifi = 0;
+	cont.lifi = 0;
 }

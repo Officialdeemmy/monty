@@ -4,6 +4,7 @@
  * _calloc - concatenate two strings
  * @n: number of elements
  * @size: type of elements
+ * Return: void
  */
 void *_calloc(unsigned int n, unsigned int size)
 {
@@ -31,7 +32,7 @@ void *_calloc(unsigned int n, unsigned int size)
  * @ptr: malloc pointer to reallocate
  * @old_size: old number of bytes
  * @new_size: new number of Bytes
- * Return: realloc
+ * Return: the char
  */
 char *_realloc(char *ptr, unsigned int old_size, unsigned int new_size)
 {

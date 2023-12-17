@@ -1,13 +1,13 @@
 #include "monty.h"
 /**
-* execute - executes the opcode
+* exe - executes the opcode
 * @stack: head linked list - stack
 * @counter: line_counter
 * @file: poiner to monty file
 * @content: line content
 * Return: 1 if success
 */
-int execute(char *content, stack_t **stack, unsigned int counter, FILE *file)
+int exe(char *content, stack_t **stack, unsigned int counter, FILE *file)
 {
 	instruction_t opst[] = {
 				{"push", _push}, {"pall", _pall}, {"pint", _pint},
@@ -33,7 +33,7 @@ int execute(char *content, stack_t **stack, unsigned int counter, FILE *file)
 	op = strtok(content, " \n\t");
 	if (op && op[0] == '#')
 		return (0);
-	bus.arg = strtok(NULL, " \n\t");
+	cont.arg = strtok(NULL, " \n\t");
 	while (opst[i].opcode && op)
 	{
 		if (strcmp(op, opst[i].opcode) == 0)
