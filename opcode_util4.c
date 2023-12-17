@@ -1,59 +1,51 @@
 #include "monty.h"
-
 /**
- * _rotl_ - rotates first element to the bottom and the second to the top
- * @head: head of the linked list
- * @c_line: line number
+  *_rotl- rotates the stack to the top
+  *@head: stack head
+  *@counter: line_number
  */
-void _rotl_(stack_t **head, unsigned int c_line)
+void _rotl(stack_t **head,  __attribute__((unused)) unsigned int counter)
 {
-	stack_t *aux1 = NULL;
-	stack_t *aux2 = NULL;
-	(void)c_line;
+	stack_t *tmp = *head, *aux;
 
-	if (*head == NULL)
+	if (*head == NULL || (*head)->next == NULL)
+	{
 		return;
-
-	if ((*head)->next == NULL)
-		return;
-
-	aux1 = (*head)->next;
-	aux2 = *head;
-
-	for (; aux2->next != NULL; aux2 = aux2->next)
-		;
-
-	aux1->prev = NULL;
-	aux2->next = *head;
+	}
+	aux = (*head)->next;
+	aux->prev = NULL;
+	while (tmp->next != NULL)
+	{
+		tmp = tmp->next;
+	}
+	tmp->next = *head;
 	(*head)->next = NULL;
-	(*head)->prev = aux2;
-	*head = aux1;
+	(*head)->prev = tmp;
+	(*head) = aux;
 }
 
 /**
- * _rotr_ - reverse the stack
- * @head: head of the linked list
- * @c_line: line number
+  *_rotr- rotates the stack to the bottom
+  *@head: stack head
+  *@counter: line_number
+  *Return: no return
  */
-void _rotr_(stack_t **head, unsigned int c_line)
+void _rotr(stack_t **head, __attribute__((unused)) unsigned int counter)
 {
-	stack_t *aux = NULL;
-	(void)c_line;
+	stack_t *copy;
 
-	if (*head == NULL)
+	copy = *head;
+	if (*head == NULL || (*head)->next == NULL)
+	{
 		return;
-
-	if ((*head)->next == NULL)
-		return;
-
-	aux = *head;
-
-	for (; aux->next != NULL; aux = aux->next)
-		;
-
-	aux->prev->next = NULL;
-	aux->next = *head;
-	aux->prev = NULL;
-	(*head)->prev = aux;
-	*head = aux;
+	}
+	while (copy->next)
+	{
+		copy = copy->next;
+	}
+	copy->next = *head;
+	copy->prev->next = NULL;
+	copy->prev = NULL;
+	(*head)->prev = copy;
+	(*head) = copy;
 }
